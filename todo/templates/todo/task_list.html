@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+{% extends "todo/base.html" %}
+{% load static %}
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TASK LIST</title>
+    <link rel="stylesheet" href="{% static 'todo/css/customStyle2.css' %}">
+    <link rel="stylesheet" href="{% static 'todo/css/customComponents1.css' %}">
+
+    <style>
+      .listBoard{
+        max-width: 800px;
+      }
+      .addButton{
+        padding: 3% 0% 3% 0%;
+      }
+      .midContainer{
+        background-color: #ebe9e9;
+        height: 100%;
+      }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top navbar-light" style="background-color: white;padding: 1% 0% 1% 0%;">
+    <div class="container-fluid">
+        <img src="{% static 'todo/images/tasklylogo1.png' %}" class="logo2"/>
+        <span class="text-uppercase pageTitle">{{ category }} TASK LIST</span>
+        <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link navText" href="/user_dashboard/{{ user.id }}">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link navText" href="/user_logout">LOGOUT</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="midContainer">
+    <div class="container listBoard">
+        <div class="addButton">
+            <a href="/new_task/{{ category.id }}">
+                <button type="button" class="btn btn-sm btn-light"><span class="h5">+</span> Add new task</button>
+            </a>
+        </div>
+
+        <ul class="list-group">
+            {% if tasks %}
+            {% for task in tasks %}
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">{{ task.title }}</div>
+                    {% if task.description %}
+                    <div class="small">{{ task.description }}</div>
+                    {% endif %}
+
+                    {% if task.time or task.due_date %}
+                    <div class="text-success" style="font-size: 12px;">
+                        {% if task.time %}
+                          {{ task.time }}
+                          {% if task.due_date %}
+                            | {{ task.due_date }}
+                          {% endif %}
+                        {% else %}
+                          {{ task.due_date }}
+                        {% endif %}
+
+                        <span class="text-danger">
+                        {% if task.overdue %}
+                          | {{ task.overdue }}
+                        {% endif %}
+                  </span>
+                    </div>
+                    {% endif %}
+
+
+                    {% if task.priority.name == "high" %}
+                    <span class="badge rounded-pill" style="background-color: #ff75a0;">{{ task.priority }}</span>
+                    {% elif task.priority.name == "medium" %}
+                    <span class="badge rounded-pill" style="background-color: #ffd384;">{{ task.priority }}</span>
+                    {% else %}
+                    <span class="badge rounded-pill" style="background-color: #6886c5;">{{ task.priority }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false"></button>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/mark_as_done_task/{{ task.id }}">Mark as Done</a></li>
+                        <li><a class="dropdown-item" href="/update_task/{{ task.id }}">Edit</a></li>
+                        <li><a class="dropdown-item"
+                               onclick="return confirm('Are you sure you want to delete this task?')"
+                               href="/delete_task/{{ task.id }}"> Delete</a></li>
+                    </ul>
+                </div>
+
+            </li>
+            {% endfor %}
+            {% else %}
+            <div class="card text-center p-2" style="width: 100%;">
+                <img src="{% static 'todo/images/confetti.png' %}" class="mx-auto m-4" width="80"/>
+                <div class="card-body">
+                    <p class="card-text"><strong>HOORAY!</strong> you have no tasks</p>
+                </div>
+            </div>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
+
+{% endblock %}

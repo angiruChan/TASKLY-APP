@@ -1,0 +1,28 @@
+/* customized button */
+.btn-light {
+  color: #fff;
+  background-color: #ed217c;
+  border-color: #ed217c;
+}
+
+.btn-light:hover {
+  color: #fff;
+  background-color: #ff2385;
+  border-color: #ff2385;
+}
+
+.btn-light:focus, .btn-light.focus {
+  box-shadow: 0 0 0 3px rgba(255, 67, 151, 0.5);
+}
+
+.btn-light.disabled, .btn-light:disabled {
+  background-color: #ed217c;
+  border-color: #ed217c;
+}
+
+.btn-light:active, .btn-light.active,
+.show > .btn-light.dropdown-toggle {
+  background-color: #ed217c;
+  background-image: none;
+  border-color: #ed217c;
+}

@@ -1,0 +1,46 @@
+.asteriskField{
+  display: none;
+}
+.generalCon{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 5%;
+}
+.loginWrapper{
+  background-color:  #f2f2f2;
+  border-radius: 20px;
+  min-width: 150px;
+  max-width: 500px;
+  margin: auto;
+  padding-top: 30px;
+}
+.headline{
+  text-align: center;
+}
+.formItems{
+  width: 330px;
+  margin: auto;
+}
+.logButtonCon{
+  width: 150px;
+  margin: auto;
+}
+.logButton{
+  width: 150px;
+  margin-top: 20px;
+
+}
+.lowertxtCon{
+  text-align: center;
+  padding-bottom: 5px;
+}
+.formFields{
+  margin-top: 10px;
+}
+.logoCon{
+  max-width: 100%;
+  text-align: center;
+  padding: 3%;
+}
+

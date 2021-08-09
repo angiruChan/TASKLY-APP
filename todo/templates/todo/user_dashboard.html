@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+{% extends "todo/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DASHBOARD</title>
+    <link rel="stylesheet" href="{% static 'todo/css/customStyle2.css' %}">
+    <link rel="stylesheet" href="{% static 'todo/css/customComponents1.css' %}">
+    <style>
+      .dashBodyConUpper{
+        background-color: #ebe9e9;
+        padding: 3em;
+      }
+      .summaryCard{
+        background-color: #2e3192;
+        font-size: 150%;
+        color: white;
+        border-radius: 10px;
+      }
+      .greenS{
+        background-color: #ed217c;
+      }
+      .redS{
+        background-color: #6c757d;
+      }
+      .count{
+        background-color: white;
+        font-size: 100%;
+        color: black;
+        margin-right: 10%;
+      }
+      .midHeadline{
+        font-size: 30px;
+        font-weight: bolder;
+        padding: 30px;
+      }
+      .mainLabel{
+        font-size: 20px;
+        font-weight: 600;
+        margin-top: 2%;
+        text-align: center;
+      }
+      .categList{
+        padding: 17px;
+      }
+      .addButton{
+        padding: 2% 0% 2% 0%;
+      }
+      a:link, a:visited{
+        color: black;
+        text-decoration: none;
+      }
+      a:hover{
+        color: #ed217c;
+      }
+
+      a.yes:link{
+        color: white;
+      }
+
+    </style>
+
+</head>
+
+<body>
+<div class="dashboardCon">
+
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light " style="background-color: white;padding: 1% 0% 1% 0%;">
+        <div class="container-fluid">
+            <img src="{% static 'todo/images/tasklylogo1.png' %}" class="logo2"/>
+            <span class="text-uppercase pageTitle">HOME</span>
+            <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link navText" href="/user_logout">LOGOUT</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashBodyConUpper">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-xl-4" >
+                    <a href="/completed_tasks_list/{{ user.id }}">
+                        <div class="p-md-4 p-2 summaryCard greenS">
+                            <span class="badge count">{{ completed }}</span>
+                            Completed Tasks
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-4">
+                    <a href="/pending_tasks_list/{{ user.id }}">
+                        <div class="p-md-4 p-2 summaryCard blueS">
+                            <span class="badge count">{{ pending }}</span>
+                            Pending Tasks
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-4">
+                    <a href="/overdue_tasks_list/{{ user.id }}">
+                        <div class="p-md-4 p-2 summaryCard redS">
+                            <span class="badge count">{{ overdue }}</span>
+                            Overdue Tasks
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mainLabel fw-bold">
+        <span>CATEGORY</span>
+    </div>
+
+    <div class="container">
+        <div class="addButton">
+            <a href="/new_category/{{ user.id }}">
+                <button type="button" class="btn btn-sm btn-light"><span class="h5">+</span> Add new category</button>
+            </a>
+        </div>
+        <ul class="list-group">
+            {% if category %}
+                {% for c in category %}
+                <li class="list-group-item d-flex justify-content-between align-items-center categList">
+                    <a href="/task_list/{{ c.id }}" class="text-uppercase">{{ c.name }}</a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false"></button>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/update_category/{{ c.id }}">Edit</a></li>
+                            <li><a class="dropdown-item"
+                                   onclick="return confirm('Are you sure you want to delete this category? All the tasks in this category will be deleted as well.')"
+                                   href="/delete_category/{{ c.id }}">Delete</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% endfor %}
+            {% else %}
+            <div class="card text-center p-2" style="width: 100%; border-color:grey;">
+                <img src="{% static 'todo/images/inbox.png' %}" class="mx-auto m-4" width="80"/>
+                <div class="card-body">
+                    <p class="card-text">There are no categories to display</p>
+                </div>
+            </div>
+            {% endif %}
+            </li>
+        </ul>
+    </div>
+
+</div>
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+html, body {
+    height:100%;
+    width:100%;
+    overflow:auto;
+}
+/* header title */
+a.navText{
+    font-weight: bold;
+    font-size: 14px;
+}
+.logo2{
+    width: 55px;
+}
+.pageTitle{
+    font-size: 27px;
+    margin-left: 1%;
+    margin-right: 3%;
+    font-weight: bolder;
+}
+/* end header title */

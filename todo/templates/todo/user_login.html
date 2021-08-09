@@ -1,0 +1,58 @@
+<title>LOGIN</title>
+
+{% extends "todo/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'todo/css/customStyle1.css' %}">
+<link rel="stylesheet" href="{% static 'todo/css/customComponents1.css' %}">
+<style>
+    .generalCon{
+        padding-top: 8%;
+        background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+                    url( "{% static 'todo/images/bg.jpg' %}") center center no-repeat;
+        background-size: cover;
+    }
+</style>
+
+<div class="generalCon">
+    <div class="loginWrapper">
+        <div class="logoCon">
+            <img src="{% static 'todo/images/tasklylogo2.png' %}" width="70%"/>
+        </div>
+
+        <div class="headline"><h3>LOGIN</h3></div>
+
+        {% if message %}
+        <p class="text-center text-danger"><small>{{ message }}</small></p>
+        {% endif %}
+
+        <form method="POST" class="post-form">
+            {% csrf_token %} <!-- cross-site request forgery -->
+            <div class="container">
+                <div class="formItems">
+                    <div class="formFields">{{ login_form.username|as_crispy_field }}</div>
+                    <div class="formFields">{{ login_form.password|as_crispy_field }}</div>
+                    <div class="logButtonCon">
+                        <button type="submit" class="btn btn-light logButton">Login</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+        <div class="lowertxtCon">
+            <p>Don't have an account? <a href="../user_registration">Create an account</a>.</p>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="text-center small p-3">
+        © Copyright 2021 - <b>TRASADAS</b> . All Rights Reserved
+    </div>
+</div>
+
+{% endblock %}

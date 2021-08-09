@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+{% extends "todo/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'todo/css/customStyle1.css' %}">
+    <link rel="stylesheet" href="{% static 'todo/css/customStyle2.css' %}">
+    <link rel="stylesheet" href="{% static 'todo/css/customComponents1.css' %}">
+
+    <style>
+      .midContainer{
+        background-color: #ebe9e9;
+        height: 100%;
+        padding: 3%;
+      }
+      .logButtonCon{
+        width: auto;
+        padding:1%;
+      }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top navbar-light" style="background-color: white;padding: 1% 0% 1% 0%;">
+    <div class="container-fluid">
+        <img src="{% static 'todo/images/tasklylogo1.png' %}" class="logo2"/>
+        <span class="text-uppercase pageTitle">{{ title }}</span>
+        <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link navText" href="/user_dashboard/{{ user.id }}">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link navText" href="/user_logout">LOGOUT</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="midContainer">
+    <div class="card p-2 mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <div class="card-text">
+                <form method="POST" class="post-form ">
+                    {% csrf_token %} <!-- cross-site request forgery -->
+                    <div class="container">
+                        <div class="formItems">
+                            <div class="formFields">{{ form.title|as_crispy_field }}</div>
+                            <div class="formFields">{{ form.description|as_crispy_field }}</div>
+                            <div class="formFields">{{ form.priority|as_crispy_field }}</div>
+                            <div class="formFields">{{ form.time|as_crispy_field }}</div>
+                            <div class="formFields">{{ form.due_date|as_crispy_field }}</div>
+                            <div class="logButtonCon">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a href="/task_list/{{ category.id }}">
+                                            <button type="button" class="btn btn-secondary logButton">Cancel</button>
+                                        </a>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-light logButton">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+{% endblock %}
